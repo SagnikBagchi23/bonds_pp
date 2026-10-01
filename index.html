@@ -1,6 +1,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bond Gradient Tester</title>
+<link rel="stylesheet" href="dialkit.css">
 
 <style>
 /* ── Mint DS Fonts ── */
@@ -69,11 +70,6 @@
   --gradientStart: var(--bgDVGreySubtle);
   --gradientHeight: 20vh;
 
-  --panelBg: rgba(255,255,255,0.92);
-  --panelBorder: rgba(0,0,0,0.08);
-  --panelText: #353839;
-  --panelTextSecondary: #7F8283;
-
   --font-body: 'GrowwSans', sans-serif;
   --font-heading: 'Sohne', sans-serif;
 
@@ -124,11 +120,6 @@
     --bgDVBrownSubtle:      #271A18;
     --bgDVGreySubtle:       #1C1F24;
 
-    --panelBg: rgba(21,24,25,0.94);
-    --panelBorder: rgba(255,255,255,0.08);
-    --panelText: #F2F5F7;
-    --panelTextSecondary: #989EA0;
-
     --pageBg: #111315;
   }
 }
@@ -176,11 +167,6 @@
   --bgDVBrownSubtle:      #271A18;
   --bgDVGreySubtle:       #1C1F24;
 
-  --panelBg: rgba(21,24,25,0.94);
-  --panelBorder: rgba(255,255,255,0.08);
-  --panelText: #F2F5F7;
-  --panelTextSecondary: #989EA0;
-
   --pageBg: #111315;
 }
 
@@ -190,30 +176,24 @@ html, body { height: 100%; }
 body {
   background: var(--pageBg);
   color: var(--contentPrimary);
-  font-family: var(--font-heading);
-  font-weight: 500;
+  font-family: var(--font-body);
+  font-weight: 400;
   font-size: 14px;
   line-height: 20px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
-}
-
-/* ── Outer layout: phone mockup + panel ── */
-.stage {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  gap: 32px;
   min-height: 100vh;
-  padding: 40px 24px;
 }
 
 /* ── iPhone Mockup Frame ── */
 .iphone-frame {
   width: 393px;
   height: 852px;
-  border: 2px solid var(--borderNeutral);
+  border: 2px solid var(--borderPrimary);
   border-radius: 48px;
   overflow: hidden;
   position: relative;
@@ -317,6 +297,19 @@ body {
   line-height: 28px;
   text-wrap: balance;
 }
+.custom-tag {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: var(--backgroundAccentSubtle);
+  color: var(--contentAccent);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+}
+.custom-tag:empty { display: none; }
 .yield-row {
   margin-top: 16px;
   display: flex;
@@ -424,354 +417,153 @@ body {
   line-height: 24px;
 }
 
-/* ── Control Panel (DialKit-styled) ── */
-.control-panel {
-  width: 340px;
-  max-height: 852px;
-  background: var(--panelBg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--panelBorder);
-  border-radius: 16px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  font-family: var(--font-heading);
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--panelText);
-  flex-shrink: 0;
-}
-.panel-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 16px;
-  border-bottom: 1px solid var(--panelBorder);
-}
-.panel-title {
-  font-family: var(--font-heading);
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 20px;
-}
-.panel-toggle {
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  background: none;
-  color: var(--panelTextSecondary);
-  cursor: pointer;
-  border-radius: 6px;
-  font-size: 16px;
-}
-.panel-toggle:hover { background: var(--panelBorder); }
-.panel-body {
-  padding: 12px 16px 16px;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-.panel-body[hidden] { display: none; }
-.control-group label {
-  display: block;
-  font-family: var(--font-heading);
-  font-size: 10px;
-  font-weight: 500;
-  color: var(--panelTextSecondary);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  margin-bottom: 6px;
-  line-height: 12px;
-}
-.control-group select,
-.control-group input[type="range"] {
-  width: 100%;
-  font-family: var(--font-heading);
-  font-size: 13px;
-  font-weight: 500;
-}
-.control-group select {
-  padding: 8px 10px;
-  border-radius: 8px;
-  border: 1px solid var(--panelBorder);
-  background: var(--backgroundSurfaceZ1);
-  color: var(--panelText);
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M3 4.5L6 7.5L9 4.5' stroke='%23898C8E' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  padding-right: 28px;
-}
-.control-group input[type="range"] {
-  accent-color: var(--backgroundAccent);
-  height: 4px;
-}
-.theme-toggle-row {
-  display: flex;
-  gap: 4px;
-  background: var(--backgroundTertiary);
-  border-radius: 8px;
-  padding: 3px;
-}
-.theme-btn {
-  flex: 1;
-  padding: 6px 0;
-  border: none;
-  border-radius: 6px;
-  font-family: var(--font-heading);
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--panelTextSecondary);
-  background: transparent;
-  cursor: pointer;
-  transition: all 0.15s;
-  line-height: 18px;
-}
-.theme-btn.active {
-  background: var(--backgroundSurfaceZ1);
-  color: var(--panelText);
-}
-
-/* ── Debug info ── */
-.debug-box {
-  background: var(--backgroundSecondary);
+/* ── Debug overlay on mockup ── */
+.debug-overlay {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  right: 8px;
+  z-index: 30;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border-radius: 10px;
-  padding: 10px 12px;
+  padding: 8px 10px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  font-variant-numeric: tabular-nums;
-}
-.debug-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 12px;
+  gap: 4px;
   font-family: var(--font-heading);
-  font-weight: 500;
-}
-.debug-label { color: var(--panelTextSecondary); }
-.debug-value {
-  color: var(--panelText);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.color-swatch {
-  width: 14px;
-  height: 14px;
-  border-radius: 4px;
-  border: 1px solid var(--panelBorder);
-  flex-shrink: 0;
-}
-.family-chip {
-  display: inline-flex;
-  padding: 2px 8px;
-  border-radius: 4px;
   font-size: 11px;
   font-weight: 500;
-  letter-spacing: 0.02em;
+  color: rgba(255,255,255,0.85);
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
 }
-.fallback-tag {
+.debug-overlay .dbg-row {
+  display: flex;
+  justify-content: space-between;
+}
+.debug-overlay .dbg-label { opacity: 0.5; }
+.debug-overlay .dbg-val { display: flex; align-items: center; gap: 4px; }
+.debug-overlay .dbg-swatch {
+  width: 10px; height: 10px; border-radius: 3px;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.debug-overlay .dbg-chip {
+  padding: 1px 6px;
+  border-radius: 3px;
   font-size: 10px;
-  font-weight: 500;
-  color: var(--contentWarning);
+}
+.debug-overlay .dbg-fallback {
+  color: #FCCE00;
+  font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
-/* ── Logo grid in panel ── */
-.logo-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-}
-.logo-thumb {
-  width: 16px;
-  height: 16px;
-  border-radius: 4px;
-  object-fit: cover;
-  border: 1px solid transparent;
-  cursor: pointer;
-  background: var(--backgroundSurfaceZ1);
-  transition: border-color 0.15s;
-}
-.logo-thumb:hover { border-color: var(--contentTertiary); }
-.logo-thumb.active { border-color: var(--backgroundAccent); outline: 1px solid var(--backgroundAccent); }
-
 /* ── Responsive ── */
-@media (max-width: 820px) {
-  .stage {
-    flex-direction: column;
-    align-items: center;
-    padding: 24px 16px;
-    gap: 24px;
-  }
+@media (max-width: 500px) {
   .iphone-frame {
     width: 100%;
     max-width: 393px;
     height: 750px;
-  }
-  .control-panel {
-    width: 100%;
-    max-width: 393px;
-    max-height: none;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
   }
 }
 </style>
 
-<!-- Outer stage -->
-<div class="stage">
-
-  <!-- iPhone Mockup -->
-  <div class="iphone-frame">
-    <div class="iphone-notch"></div>
-    <div class="iphone-screen">
-      <!-- Gradient overlay -->
-      <div class="gradient-overlay" id="gradientOverlay"></div>
-
-      <!-- Mock product page -->
-      <div class="page-wrap">
-        <!-- App bar -->
-        <div class="app-bar">
-          <div class="app-bar-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
-          </div>
-          <div class="app-bar-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-          </div>
+<!-- iPhone Mockup centered -->
+<div class="iphone-frame">
+  <div class="iphone-notch"></div>
+  <div class="iphone-screen">
+    <div class="gradient-overlay" id="gradientOverlay"></div>
+    <div class="page-wrap">
+      <div class="app-bar">
+        <div class="app-bar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
         </div>
-
-        <!-- Hero -->
-        <div class="hero">
-          <img class="issuer-logo" id="heroLogo" src="logos/Aye Finance.png" alt="Issuer logo" crossorigin="anonymous">
-          <div class="issuer-meta">
-            <span class="issuer-tag" id="issuerName">Aye Finance</span>
-            <span class="issuer-dot"></span>
-            <span class="issuer-tag">NCD</span>
-          </div>
-          <div class="bond-name">Aye Finance Pvt Ltd NCD Tranche I</div>
-          <div class="yield-row">
-            <span class="yield-value">9.25%</span>
-            <span class="yield-label">p.a. yield</span>
-          </div>
-          <div class="yield-badge">
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M3 5l3-3 3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            +0.15% today
-            <span class="yield-badge-period">1D</span>
-          </div>
+        <div class="app-bar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
         </div>
-
-        <!-- Details card -->
-        <div class="details-card">
-          <div class="detail-row">
-            <span class="detail-label">Face Value</span>
-            <span class="detail-value">&#8377;1,000.00</span>
-          </div>
-          <div class="detail-row">
-            <span class="detail-label">Min. Investment</span>
-            <span class="detail-value">&#8377;10,000.00</span>
-          </div>
-          <div class="detail-row">
-            <span class="detail-label">Coupon Rate</span>
-            <span class="detail-value">9.25%</span>
-          </div>
-          <div class="detail-row">
-            <span class="detail-label">Maturity Date</span>
-            <span class="detail-value">15 Mar 2029</span>
-          </div>
-          <div class="detail-row">
-            <span class="detail-label">Credit Rating</span>
-            <span class="detail-value"><span class="rating-chip">AA+</span></span>
-          </div>
-          <div class="detail-row">
-            <span class="detail-label">Payment Frequency</span>
-            <span class="detail-value">Monthly</span>
-          </div>
+      </div>
+      <div class="hero">
+        <img class="issuer-logo" id="heroLogo" src="logos/Aye Finance.png" alt="Issuer logo" crossorigin="anonymous">
+        <div class="issuer-meta">
+          <span class="issuer-tag" id="issuerName">Aye Finance</span>
+          <span class="issuer-dot"></span>
+          <span class="issuer-tag">NCD</span>
         </div>
-
-        <!-- CTA -->
-        <div class="cta-area">
-          <button class="cta-btn">Invest Now</button>
+        <div class="bond-name" id="bondName">Aye Finance Pvt Ltd NCD Tranche I</div>
+        <div class="custom-tag" id="customTag"></div>
+        <div class="yield-row">
+          <span class="yield-value">9.25%</span>
+          <span class="yield-label">p.a. yield</span>
         </div>
+        <div class="yield-badge">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M3 5l3-3 3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          +0.15% today
+          <span class="yield-badge-period">1D</span>
+        </div>
+      </div>
+      <div class="details-card">
+        <div class="detail-row">
+          <span class="detail-label">Face Value</span>
+          <span class="detail-value">&#8377;1,000.00</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Min. Investment</span>
+          <span class="detail-value">&#8377;10,000.00</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Coupon Rate</span>
+          <span class="detail-value">9.25%</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Maturity Date</span>
+          <span class="detail-value">15 Mar 2029</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Credit Rating</span>
+          <span class="detail-value"><span class="rating-chip">AA+</span></span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Payment Frequency</span>
+          <span class="detail-value">Monthly</span>
+        </div>
+      </div>
+      <div class="cta-area">
+        <button class="cta-btn">Invest Now</button>
+      </div>
+    </div>
+    <!-- Debug overlay inside phone -->
+    <div class="debug-overlay" id="debugOverlay">
+      <div class="dbg-row">
+        <span class="dbg-label">Color</span>
+        <span class="dbg-val"><span class="dbg-swatch" id="dbgSwatch"></span><span id="dbgHex">&mdash;</span></span>
+      </div>
+      <div class="dbg-row">
+        <span class="dbg-label">HSL</span>
+        <span class="dbg-val" id="dbgHSL">&mdash;</span>
+      </div>
+      <div class="dbg-row">
+        <span class="dbg-label">Family</span>
+        <span class="dbg-val"><span class="dbg-chip" id="dbgFamily">&mdash;</span></span>
+      </div>
+      <div class="dbg-row">
+        <span class="dbg-label">Token</span>
+        <span class="dbg-val" id="dbgToken">&mdash;</span>
+      </div>
+      <div class="dbg-row">
+        <span class="dbg-label">Status</span>
+        <span class="dbg-val" id="dbgStatus">&mdash;</span>
       </div>
     </div>
   </div>
-
-  <!-- Control Panel -->
-  <div class="control-panel" id="controlPanel">
-    <div class="panel-header">
-      <span class="panel-title">Gradient Tester</span>
-      <button class="panel-toggle" id="panelToggle" aria-label="Toggle panel">&#9660;</button>
-    </div>
-    <div class="panel-body" id="panelBody">
-      <!-- Theme toggle -->
-      <div class="control-group">
-        <label>Theme</label>
-        <div class="theme-toggle-row">
-          <button class="theme-btn" data-theme="light">Light</button>
-          <button class="theme-btn active" data-theme="system">System</button>
-          <button class="theme-btn" data-theme="dark">Dark</button>
-        </div>
-      </div>
-
-      <!-- Logo selector -->
-      <div class="control-group">
-        <label>Issuer Logo</label>
-        <select id="logoSelect"></select>
-      </div>
-
-      <!-- Logo grid -->
-      <div class="control-group">
-        <label>Quick Pick</label>
-        <div class="logo-grid" id="logoGrid"></div>
-      </div>
-
-      <!-- Gradient height -->
-      <div class="control-group">
-        <label>Gradient Height: <span id="heightLabel">20vh</span></label>
-        <input type="range" id="heightSlider" min="5" max="40" value="20" step="1">
-      </div>
-
-      <!-- Debug info -->
-      <div class="control-group">
-        <label>Extraction Result</label>
-        <div class="debug-box">
-          <div class="debug-row">
-            <span class="debug-label">Dominant Color</span>
-            <span class="debug-value" id="dbgColor">
-              <span class="color-swatch" id="dbgSwatch"></span>
-              <span id="dbgHex">&#8212;</span>
-            </span>
-          </div>
-          <div class="debug-row">
-            <span class="debug-label">Hue / Sat / Light</span>
-            <span class="debug-value" id="dbgHSL">&#8212;</span>
-          </div>
-          <div class="debug-row">
-            <span class="debug-label">Matched Family</span>
-            <span class="debug-value"><span class="family-chip" id="dbgFamily">&#8212;</span></span>
-          </div>
-          <div class="debug-row">
-            <span class="debug-label">Token</span>
-            <span class="debug-value" id="dbgToken">&#8212;</span>
-          </div>
-          <div class="debug-row">
-            <span class="debug-label">Status</span>
-            <span class="debug-value" id="dbgStatus">&#8212;</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
 </div>
 
+<script src="dialkit.js"></script>
 <script>
 // ── Deduplicated logo list ──
 var LOGOS = [
@@ -786,20 +578,19 @@ var LOGOS = [
   "Spandana Sphoorty","Ugro Capital","Varthana Finance","progfin"
 ];
 
-// ── Data Viz families with hue anchors ──
 var FAMILIES = [
-  { name: "Brown",      hue: 5,   css: "BrownSubtle",      token: "--bgDVBrownSubtle" },
-  { name: "Red",        hue: 11,  css: "RedSubtle",         token: "--bgDVRedSubtle" },
-  { name: "Orange",     hue: 34,  css: "OrangeSubtle",      token: "--bgDVOrangeSubtle" },
-  { name: "Yellow",     hue: 49,  css: "YellowSubtle",      token: "--bgDVYellowSubtle" },
-  { name: "OliveGreen", hue: 78,  css: "OliveGreenSubtle",  token: "--bgDVOliveGreenSubtle" },
-  { name: "MintGreen",  hue: 162, css: "MintGreenSubtle",   token: "--bgDVMintGreenSubtle" },
-  { name: "SkyBlue",    hue: 205, css: "SkyBlueSubtle",     token: "--bgDVSkyBlueSubtle" },
-  { name: "Blue",       hue: 233, css: "BlueSubtle",        token: "--bgDVBlueSubtle" },
-  { name: "Lilac",      hue: 240, css: "LilacSubtle",       token: "--bgDVLilacSubtle" },
-  { name: "Magenta",    hue: 333, css: "MagentaSubtle",     token: "--bgDVMagentaSubtle" },
+  { name: "Brown",      hue: 5,   token: "--bgDVBrownSubtle" },
+  { name: "Red",        hue: 11,  token: "--bgDVRedSubtle" },
+  { name: "Orange",     hue: 34,  token: "--bgDVOrangeSubtle" },
+  { name: "Yellow",     hue: 49,  token: "--bgDVYellowSubtle" },
+  { name: "OliveGreen", hue: 78,  token: "--bgDVOliveGreenSubtle" },
+  { name: "MintGreen",  hue: 162, token: "--bgDVMintGreenSubtle" },
+  { name: "SkyBlue",    hue: 205, token: "--bgDVSkyBlueSubtle" },
+  { name: "Blue",       hue: 233, token: "--bgDVBlueSubtle" },
+  { name: "Lilac",      hue: 240, token: "--bgDVLilacSubtle" },
+  { name: "Magenta",    hue: 333, token: "--bgDVMagentaSubtle" },
 ];
-var GREY_FAMILY = { name: "Grey", css: "GreySubtle", token: "--bgDVGreySubtle" };
+var GREY_FAMILY = { name: "Grey", token: "--bgDVGreySubtle" };
 
 var FAMILY_COLORS = {
   Brown:"#9D615C", Red:"#FF5E3B", Orange:"#F59817", Yellow:"#FCCE00",
@@ -815,20 +606,12 @@ function extractDominantColor(imgSrc) {
     img.onload = function() {
       var canvas = document.createElement("canvas");
       var SIZE = 50;
-      canvas.width = SIZE;
-      canvas.height = SIZE;
+      canvas.width = SIZE; canvas.height = SIZE;
       var ctx = canvas.getContext("2d");
       ctx.drawImage(img, 0, 0, SIZE, SIZE);
       var data;
-      try {
-        data = ctx.getImageData(0, 0, SIZE, SIZE).data;
-      } catch(e) {
-        resolve(null);
-        return;
-      }
-      var buckets = {};
-      var totalPixels = 0;
-      var filteredPixels = 0;
+      try { data = ctx.getImageData(0, 0, SIZE, SIZE).data; } catch(e) { resolve(null); return; }
+      var buckets = {}, totalPixels = 0, filteredPixels = 0;
       for (var i = 0; i < data.length; i += 4) {
         var r = data[i], g = data[i+1], b = data[i+2], a = data[i+3];
         totalPixels++;
@@ -838,30 +621,14 @@ function extractDominantColor(imgSrc) {
         filteredPixels++;
         var key = (r >> 5) + "," + (g >> 5) + "," + (b >> 5);
         if (!buckets[key]) buckets[key] = { count: 0, rS: 0, gS: 0, bS: 0 };
-        buckets[key].count++;
-        buckets[key].rS += r;
-        buckets[key].gS += g;
-        buckets[key].bS += b;
+        buckets[key].count++; buckets[key].rS += r; buckets[key].gS += g; buckets[key].bS += b;
       }
       var ratio = filteredPixels / totalPixels;
-      if (ratio < 0.05) {
-        resolve({ r: 0, g: 0, b: 0, ratio: ratio, tooFew: true });
-        return;
-      }
-      var best = null;
-      var keys = Object.keys(buckets);
-      for (var k = 0; k < keys.length; k++) {
-        var bk = buckets[keys[k]];
-        if (!best || bk.count > best.count) best = bk;
-      }
+      if (ratio < 0.05) { resolve({ r: 0, g: 0, b: 0, ratio: ratio, tooFew: true }); return; }
+      var best = null, keys = Object.keys(buckets);
+      for (var k = 0; k < keys.length; k++) { var bk = buckets[keys[k]]; if (!best || bk.count > best.count) best = bk; }
       if (!best) { resolve(null); return; }
-      resolve({
-        r: Math.round(best.rS / best.count),
-        g: Math.round(best.gS / best.count),
-        b: Math.round(best.bS / best.count),
-        ratio: ratio,
-        tooFew: false
-      });
+      resolve({ r: Math.round(best.rS / best.count), g: Math.round(best.gS / best.count), b: Math.round(best.bS / best.count), ratio: ratio, tooFew: false });
     };
     img.onerror = function() { resolve(null); };
     img.src = imgSrc;
@@ -870,12 +637,9 @@ function extractDominantColor(imgSrc) {
 
 function rgbToHsl(r, g, b) {
   r /= 255; g /= 255; b /= 255;
-  var max = Math.max(r, g, b), min = Math.min(r, g, b);
-  var l = (max + min) / 2;
+  var max = Math.max(r, g, b), min = Math.min(r, g, b), l = (max + min) / 2;
   if (max === min) return { h: 0, s: 0, l: l };
-  var d = max - min;
-  var s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-  var h;
+  var d = max - min, s = l > 0.5 ? d / (2 - max - min) : d / (max + min), h;
   if (max === r) h = ((g - b) / d + (g < b ? 6 : 0)) / 6;
   else if (max === g) h = ((b - r) / d + 2) / 6;
   else h = ((r - g) / d + 4) / 6;
@@ -893,13 +657,9 @@ function mapToFamily(rgb) {
   if (hsl.l < 0.08) return { family: GREY_FAMILY, fallback: true, reason: "near-black (L=" + Math.round(hsl.l * 100) + "%)", hsl: hsl };
   if (hsl.l > 0.92) return { family: GREY_FAMILY, fallback: true, reason: "near-white (L=" + Math.round(hsl.l * 100) + "%)", hsl: hsl };
   if (hsl.l > 0.82 && hsl.s < 0.35) return { family: GREY_FAMILY, fallback: true, reason: "washed-out (L=" + Math.round(hsl.l * 100) + "%, S=" + Math.round(hsl.s * 100) + "%)", hsl: hsl };
-  var closest = null;
-  var minDist = Infinity;
+  var closest = null, minDist = Infinity;
   for (var i = 0; i < FAMILIES.length; i++) {
-    var dist = Math.min(
-      Math.abs(hsl.h - FAMILIES[i].hue),
-      360 - Math.abs(hsl.h - FAMILIES[i].hue)
-    );
+    var dist = Math.min(Math.abs(hsl.h - FAMILIES[i].hue), 360 - Math.abs(hsl.h - FAMILIES[i].hue));
     if (dist < minDist) { minDist = dist; closest = FAMILIES[i]; }
   }
   return { family: closest, fallback: false, reason: "hue match (dist " + Math.round(minDist) + "°)", hsl: hsl };
@@ -909,73 +669,45 @@ function applyGradient(family) {
   document.documentElement.style.setProperty("--gradientStart", "var(" + family.token + ")");
 }
 
-// ── UI wiring ──
-var logoSelect = document.getElementById("logoSelect");
-var logoGrid = document.getElementById("logoGrid");
-var heroLogo = document.getElementById("heroLogo");
-var issuerName = document.getElementById("issuerName");
-var heightSlider = document.getElementById("heightSlider");
-var heightLabel = document.getElementById("heightLabel");
-var panelToggle = document.getElementById("panelToggle");
-var panelBody = document.getElementById("panelBody");
+// ── DialKit setup ──
+var dialRoot = DialKit.createDialRoot({
+  position: "top-right",
+  defaultOpen: true,
+  theme: "system"
+});
+document.body.appendChild(dialRoot.element);
 
-LOGOS.forEach(function(name) {
-  var opt = document.createElement("option");
-  opt.value = name;
-  opt.textContent = name;
-  if (name === "Aye Finance") opt.selected = true;
-  logoSelect.appendChild(opt);
+var logoOptions = LOGOS.map(function(name) {
+  return { value: name, label: name };
 });
 
-LOGOS.forEach(function(name) {
-  var img = document.createElement("img");
-  img.className = "logo-thumb";
-  img.src = "logos/" + name + ".png";
-  img.alt = name;
-  img.title = name;
-  img.dataset.name = name;
-  if (name === "Aye Finance") img.classList.add("active");
-  img.addEventListener("click", function() { selectLogo(name); });
-  logoGrid.appendChild(img);
-});
-
-document.querySelectorAll(".theme-btn").forEach(function(btn) {
-  btn.addEventListener("click", function() {
-    document.querySelectorAll(".theme-btn").forEach(function(b) { b.classList.remove("active"); });
-    btn.classList.add("active");
-    var theme = btn.dataset.theme;
-    if (theme === "dark") {
-      document.documentElement.setAttribute("data-theme", "dark");
-    } else if (theme === "light") {
-      document.documentElement.setAttribute("data-theme", "light");
-    } else {
-      document.documentElement.removeAttribute("data-theme");
-    }
-  });
-});
-
-heightSlider.addEventListener("input", function() {
-  var val = heightSlider.value;
-  heightLabel.textContent = val + "vh";
-  document.documentElement.style.setProperty("--gradientHeight", val + "vh");
-});
-
-var panelOpen = true;
-panelToggle.addEventListener("click", function() {
-  panelOpen = !panelOpen;
-  panelBody.hidden = !panelOpen;
-  panelToggle.textContent = panelOpen ? "▼" : "▲";
+var dial = DialKit.createDialKit("Gradient Tester", {
+  theme: {
+    type: "select",
+    options: [
+      { value: "light", label: "Light" },
+      { value: "system", label: "System" },
+      { value: "dark", label: "Dark" }
+    ],
+    default: "system"
+  },
+  issuer: {
+    type: "select",
+    options: logoOptions,
+    default: "Aye Finance"
+  },
+  tag: {
+    type: "text",
+    default: "",
+    placeholder: "e.g. High Yield, AA+ Rated"
+  },
+  gradientHeight: [20, 5, 40, 1]
 });
 
 function selectLogo(name) {
-  logoSelect.value = name;
-  heroLogo.src = "logos/" + name + ".png";
-  issuerName.textContent = name;
-  document.querySelector(".bond-name").textContent = name + " NCD Tranche I";
-
-  document.querySelectorAll(".logo-thumb").forEach(function(t) {
-    t.classList.toggle("active", t.dataset.name === name);
-  });
+  document.getElementById("heroLogo").src = "logos/" + name + ".png";
+  document.getElementById("issuerName").textContent = name;
+  document.getElementById("bondName").textContent = name + " NCD Tranche I";
 
   extractDominantColor("logos/" + name + ".png").then(function(rgb) {
     var result = mapToFamily(rgb);
@@ -984,7 +716,15 @@ function selectLogo(name) {
   });
 }
 
-logoSelect.addEventListener("change", function() { selectLogo(logoSelect.value); });
+function applyTheme(theme) {
+  if (theme === "dark") {
+    document.documentElement.setAttribute("data-theme", "dark");
+  } else if (theme === "light") {
+    document.documentElement.setAttribute("data-theme", "light");
+  } else {
+    document.documentElement.removeAttribute("data-theme");
+  }
+}
 
 function updateDebug(rgb, result) {
   var dbgHex = document.getElementById("dbgHex");
@@ -1009,16 +749,24 @@ function updateDebug(rgb, result) {
 
   var fam = result.family;
   dbgFamily.textContent = fam.name;
-  dbgFamily.style.background = FAMILY_COLORS[fam.name] + "22";
+  dbgFamily.style.background = FAMILY_COLORS[fam.name] + "33";
   dbgFamily.style.color = FAMILY_COLORS[fam.name];
   dbgToken.textContent = fam.token;
 
   if (result.fallback) {
-    dbgStatus.innerHTML = '<span class="fallback-tag">Fallback</span> ' + result.reason;
+    dbgStatus.innerHTML = '<span class="dbg-fallback">Fallback</span> ' + result.reason;
   } else {
     dbgStatus.textContent = result.reason;
   }
 }
 
+dial.subscribe(function(values) {
+  applyTheme(values.theme);
+  selectLogo(values.issuer);
+  document.getElementById("customTag").textContent = values.tag || "";
+  document.documentElement.style.setProperty("--gradientHeight", values.gradientHeight + "vh");
+});
+
+// Initial
 selectLogo("Aye Finance");
 </script>
