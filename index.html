@@ -511,27 +511,30 @@ body {
   line-height: 24px;
 }
 
-/* ── Debug overlay on mockup ── */
+/* ── Layout wrapper ── */
+.mockup-layout {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+/* ── Debug panel (left of phone) ── */
 .debug-overlay {
-  position: absolute;
-  bottom: 8px;
-  left: 8px;
-  right: 8px;
-  z-index: 30;
+  width: 260px;
+  flex-shrink: 0;
   background: rgba(0,0,0,0.75);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border-radius: 10px;
-  padding: 8px 10px;
+  border-radius: 14px;
+  padding: 14px 16px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 8px;
   font-family: var(--font-heading);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 500;
   color: rgba(255,255,255,0.85);
   font-variant-numeric: tabular-nums;
-  pointer-events: none;
 }
 .debug-overlay .dbg-row {
   display: flex;
@@ -544,15 +547,26 @@ body {
   border: 1px solid rgba(255,255,255,0.2);
 }
 .debug-overlay .dbg-chip {
-  padding: 1px 6px;
-  border-radius: 3px;
-  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
 }
 .debug-overlay .dbg-fallback {
   color: #FCCE00;
-  font-size: 10px;
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+}
+
+/* On small screens, put debug below */
+@media (max-width: 750px) {
+  .mockup-layout {
+    flex-direction: column-reverse;
+  }
+  .debug-overlay {
+    width: 100%;
+    max-width: 405px;
+  }
 }
 
 /* ── Responsive ── */
@@ -573,6 +587,33 @@ body {
   .iphone-btn, .iphone-speaker { display: none; }
 }
 </style>
+
+<!-- Mockup + Debug layout -->
+<div class="mockup-layout">
+
+<!-- Debug panel (left) -->
+<div class="debug-overlay" id="debugOverlay">
+  <div class="dbg-row">
+    <span class="dbg-label">Color</span>
+    <span class="dbg-val"><span class="dbg-swatch" id="dbgSwatch"></span><span id="dbgHex">&mdash;</span></span>
+  </div>
+  <div class="dbg-row">
+    <span class="dbg-label">HSL</span>
+    <span class="dbg-val" id="dbgHSL">&mdash;</span>
+  </div>
+  <div class="dbg-row">
+    <span class="dbg-label">Family</span>
+    <span class="dbg-val"><span class="dbg-chip" id="dbgFamily">&mdash;</span></span>
+  </div>
+  <div class="dbg-row">
+    <span class="dbg-label">Token</span>
+    <span class="dbg-val" id="dbgToken">&mdash;</span>
+  </div>
+  <div class="dbg-row">
+    <span class="dbg-label">Status</span>
+    <span class="dbg-val" id="dbgStatus">&mdash;</span>
+  </div>
+</div>
 
 <!-- iPhone 15 Pro Mockup -->
 <div class="iphone-chassis">
@@ -646,33 +687,12 @@ body {
         <button class="cta-btn">Invest Now</button>
       </div>
     </div>
-    <!-- Debug overlay inside phone -->
-    <div class="debug-overlay" id="debugOverlay">
-      <div class="dbg-row">
-        <span class="dbg-label">Color</span>
-        <span class="dbg-val"><span class="dbg-swatch" id="dbgSwatch"></span><span id="dbgHex">&mdash;</span></span>
-      </div>
-      <div class="dbg-row">
-        <span class="dbg-label">HSL</span>
-        <span class="dbg-val" id="dbgHSL">&mdash;</span>
-      </div>
-      <div class="dbg-row">
-        <span class="dbg-label">Family</span>
-        <span class="dbg-val"><span class="dbg-chip" id="dbgFamily">&mdash;</span></span>
-      </div>
-      <div class="dbg-row">
-        <span class="dbg-label">Token</span>
-        <span class="dbg-val" id="dbgToken">&mdash;</span>
-      </div>
-      <div class="dbg-row">
-        <span class="dbg-label">Status</span>
-        <span class="dbg-val" id="dbgStatus">&mdash;</span>
-      </div>
-    </div>
   </div>
   </div>
   </div>
 </div>
+
+</div><!-- end .mockup-layout -->
 
 <script src="dialkit.js"></script>
 <script>
