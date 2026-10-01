@@ -701,6 +701,14 @@ var dial = DialKit.createDialKit("Gradient Tester", {
     default: "",
     placeholder: "e.g. High Yield, AA+ Rated"
   },
+  gradient: {
+    type: "select",
+    options: [
+      { value: "on", label: "On" },
+      { value: "off", label: "Off" }
+    ],
+    default: "on"
+  },
   gradientHeight: [20, 5, 40, 1]
 });
 
@@ -764,6 +772,7 @@ dial.subscribe(function(values) {
   applyTheme(values.theme);
   selectLogo(values.issuer);
   document.getElementById("customTag").textContent = values.tag || "";
+  document.getElementById("gradientOverlay").style.display = values.gradient === "off" ? "none" : "";
   document.documentElement.style.setProperty("--gradientHeight", values.gradientHeight + "vh");
 });
 
