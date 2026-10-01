@@ -23,6 +23,17 @@
   font-weight: 500;
   font-display: swap;
 }
+@font-face {
+  font-family: 'groww-huge-standard';
+  src: url('fonts/groww-huge-standard.woff2') format('woff2');
+  font-display: swap;
+}
+.gh-icon {
+  font-family: 'groww-huge-standard' !important;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
 /* ── Color tokens ── */
 :root {
@@ -66,6 +77,18 @@
   --bgDVMagentaSubtle:    #FEF1F4;
   --bgDVBrownSubtle:      #FCF2F1;
   --bgDVGreySubtle:       #F2F5F9;
+
+  --dvLilacEmphasis:    #5D5C9C;
+  --dvBlueEmphasis:     #4452D6;
+  --dvSkyBlueEmphasis:  #1879AF;
+  --dvMintGreenEmphasis:#00825C;
+  --dvOliveGreenEmphasis:#697832;
+  --dvYellowEmphasis:   #947400;
+  --dvOrangeEmphasis:   #B26300;
+  --dvRedEmphasis:      #D93C17;
+  --dvMagentaEmphasis:  #C03370;
+  --dvBrownEmphasis:    #885854;
+  --dvGreyEmphasis:     #586679;
 
   --gradientStart: var(--bgDVGreySubtle);
   --gradientHeight: 20vh;
@@ -120,6 +143,18 @@
     --bgDVBrownSubtle:      #271A18;
     --bgDVGreySubtle:       #1C1F24;
 
+    --dvLilacEmphasis:    #ADB0EF;
+    --dvBlueEmphasis:     #99B0FF;
+    --dvSkyBlueEmphasis:  #75C0F4;
+    --dvMintGreenEmphasis:#46D5A7;
+    --dvOliveGreenEmphasis:#AEC269;
+    --dvYellowEmphasis:   #FFD111;
+    --dvOrangeEmphasis:   #FFA52F;
+    --dvRedEmphasis:      #FF9479;
+    --dvMagentaEmphasis:  #FF8AB7;
+    --dvBrownEmphasis:    #E9A7A1;
+    --dvGreyEmphasis:     #A6B7CA;
+
     --pageBg: #111315;
   }
 }
@@ -166,6 +201,18 @@
   --bgDVMagentaSubtle:    #31111D;
   --bgDVBrownSubtle:      #271A18;
   --bgDVGreySubtle:       #1C1F24;
+
+  --dvLilacEmphasis:    #ADB0EF;
+  --dvBlueEmphasis:     #99B0FF;
+  --dvSkyBlueEmphasis:  #75C0F4;
+  --dvMintGreenEmphasis:#46D5A7;
+  --dvOliveGreenEmphasis:#AEC269;
+  --dvYellowEmphasis:   #FFD111;
+  --dvOrangeEmphasis:   #FFA52F;
+  --dvRedEmphasis:      #FF9479;
+  --dvMagentaEmphasis:  #FF8AB7;
+  --dvBrownEmphasis:    #E9A7A1;
+  --dvGreyEmphasis:     #A6B7CA;
 
   --pageBg: #111315;
 }
@@ -391,103 +438,131 @@ body {
   line-height: 28px;
   text-wrap: balance;
 }
-.custom-tag {
-  display: inline-block;
-  margin-top: 8px;
-  padding: 2px 8px;
-  border-radius: 6px;
-  background: var(--backgroundAccentSubtle);
-  color: var(--contentAccent);
-  font-family: var(--font-body);
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 18px;
-}
-.custom-tag:empty { display: none; }
-.yield-row {
-  margin-top: 16px;
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-}
-.yield-value {
-  font-family: var(--font-heading);
-  font-size: 20px;
-  font-weight: 500;
-  color: var(--contentPrimary);
-  line-height: 32px;
-  font-variant-numeric: tabular-nums;
-}
-.yield-label {
-  font-family: var(--font-body);
-  font-size: 14px;
-  font-weight: 400;
-  color: var(--contentSecondary);
-  line-height: 20px;
-}
-.yield-badge {
-  margin-top: 6px;
+/* ── MDS Tag ── */
+.mds-tag {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
+  padding: 2px 8px 2px 4px;
+  border-radius: 4px;
   font-family: var(--font-body);
   font-size: 12px;
   font-weight: 500;
-  color: var(--contentPositive);
-  font-variant-numeric: tabular-nums;
   line-height: 18px;
+  white-space: nowrap;
 }
-.yield-badge-period {
-  color: var(--contentSecondary);
-  font-weight: 400;
-  margin-left: 4px;
+.mds-tag:empty, .mds-tag[data-variant="none"] { display: none; }
+.mds-tag-icon {
+  font-size: 12px;
+  width: 12px;
+  height: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+.mds-tag[data-variant="new"]            { background: var(--bgDVSkyBlueSubtle);  color: var(--dvSkyBlueEmphasis); }
+.mds-tag[data-variant="high-yield"]     { background: var(--bgDVOrangeSubtle);   color: var(--dvOrangeEmphasis); }
+.mds-tag[data-variant="senior-secured"] { background: var(--bgDVMintGreenSubtle);color: var(--dvMintGreenEmphasis); }
+.mds-tag[data-variant="tax-free"]       { background: var(--bgDVYellowSubtle);   color: var(--dvYellowEmphasis); }
+.mds-tag[data-variant="monthly-income"] { background: var(--bgDVLilacSubtle);    color: var(--dvLilacEmphasis); }
 
-/* ── Details card ── */
-.details-card {
+/* ── Bond Card (Figma) ── */
+.bond-card {
   margin: 16px;
   background: var(--backgroundSurfaceZ1);
   border: 1px solid var(--borderPrimary);
   border-radius: 16px;
-  overflow: hidden;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
-.detail-row {
+.card-top {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
+}
+.card-ytm-block { display: flex; flex-direction: column; }
+.card-ytm-header {
+  display: flex;
   align-items: center;
-  padding: 14px 16px;
+  gap: 4px;
 }
-.detail-row + .detail-row {
-  border-top: 1px solid var(--borderPrimary);
-}
-.detail-label {
+.card-ytm-label {
   font-family: var(--font-body);
   font-size: 14px;
   font-weight: 400;
   color: var(--contentSecondary);
   line-height: 20px;
 }
-.detail-value {
-  font-family: var(--font-body);
-  font-size: 14px;
+.card-ytm-info {
+  font-size: 12px;
+  color: var(--contentSecondary);
+  cursor: help;
+}
+.card-ytm-value {
+  font-family: var(--font-heading);
+  font-size: 28px;
   font-weight: 500;
   color: var(--contentPrimary);
+  line-height: 36px;
   font-variant-numeric: tabular-nums;
-  text-align: right;
+}
+.card-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.card-data-row {
+  display: flex;
+  gap: 16px;
+}
+.card-data-cell {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.card-data-key {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--contentSecondary);
   line-height: 20px;
 }
-.rating-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 2px 8px;
-  border-radius: 6px;
-  background: var(--backgroundAccentSubtle);
-  color: var(--contentAccent);
-  font-family: var(--font-body);
-  font-size: 12px;
+.card-data-val {
+  font-family: var(--font-heading);
+  font-size: 16px;
   font-weight: 500;
-  line-height: 18px;
+  color: var(--contentPrimary);
+  line-height: 24px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Logo previews in DialKit dropdown ── */
+.dialkit-select-option img.dk-logo-preview {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  object-fit: cover;
+  vertical-align: middle;
+  margin-right: 8px;
+  flex-shrink: 0;
+  border: 1px solid rgba(128,128,128,0.15);
+}
+.dialkit-select-option {
+  display: flex !important;
+  align-items: center !important;
+}
+.dialkit-select-trigger .dk-logo-preview {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  object-fit: cover;
+  vertical-align: middle;
+  margin-right: 6px;
+  border: 1px solid rgba(128,128,128,0.15);
 }
 
 /* ── CTA ── */
@@ -573,41 +648,42 @@ body {
           <span class="issuer-tag">NCD</span>
         </div>
         <div class="bond-name" id="bondName">Aye Finance Pvt Ltd NCD Tranche I</div>
-        <div class="custom-tag" id="customTag"></div>
-        <div class="yield-row">
-          <span class="yield-value">9.25%</span>
-          <span class="yield-label">p.a. yield</span>
-        </div>
-        <div class="yield-badge">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M3 5l3-3 3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          +0.15% today
-          <span class="yield-badge-period">1D</span>
-        </div>
       </div>
-      <div class="details-card">
-        <div class="detail-row">
-          <span class="detail-label">Face Value</span>
-          <span class="detail-value">&#8377;1,000.00</span>
+      <div class="bond-card">
+        <div class="card-top">
+          <div class="card-ytm-block">
+            <div class="card-ytm-header">
+              <span class="card-ytm-label">YTM</span>
+              <span class="card-ytm-info gh-icon">&#xeadb;</span>
+            </div>
+            <span class="card-ytm-value" id="ytmValue">12.40%</span>
+          </div>
+          <div class="mds-tag" id="mdsTag" data-variant="new">
+            <span class="mds-tag-icon gh-icon" id="mdsTagIcon">&#xeb98;</span>
+            <span id="mdsTagLabel">New</span>
+          </div>
         </div>
-        <div class="detail-row">
-          <span class="detail-label">Min. Investment</span>
-          <span class="detail-value">&#8377;10,000.00</span>
-        </div>
-        <div class="detail-row">
-          <span class="detail-label">Coupon Rate</span>
-          <span class="detail-value">9.25%</span>
-        </div>
-        <div class="detail-row">
-          <span class="detail-label">Maturity Date</span>
-          <span class="detail-value">15 Mar 2029</span>
-        </div>
-        <div class="detail-row">
-          <span class="detail-label">Credit Rating</span>
-          <span class="detail-value"><span class="rating-chip">AA+</span></span>
-        </div>
-        <div class="detail-row">
-          <span class="detail-label">Payment Frequency</span>
-          <span class="detail-value">Monthly</span>
+        <div class="card-bottom">
+          <div class="card-data-row">
+            <div class="card-data-cell">
+              <span class="card-data-key">Price/unit</span>
+              <span class="card-data-val">&#8377;10,000</span>
+            </div>
+            <div class="card-data-cell">
+              <span class="card-data-key">Tenure</span>
+              <span class="card-data-val">12 months</span>
+            </div>
+          </div>
+          <div class="card-data-row">
+            <div class="card-data-cell">
+              <span class="card-data-key">Interest payout</span>
+              <span class="card-data-val">Annually</span>
+            </div>
+            <div class="card-data-cell">
+              <span class="card-data-key">Principal payout</span>
+              <span class="card-data-val">Cumulative</span>
+            </div>
+          </div>
         </div>
       </div>
       <div class="cta-area">
@@ -755,9 +831,16 @@ var dial = DialKit.createDialKit("Gradient Tester", {
     default: "Aye Finance"
   },
   tag: {
-    type: "text",
-    default: "",
-    placeholder: "e.g. High Yield, AA+ Rated"
+    type: "select",
+    options: [
+      { value: "none", label: "None" },
+      { value: "new", label: "New" },
+      { value: "high-yield", label: "High Yield" },
+      { value: "senior-secured", label: "Senior Secured" },
+      { value: "tax-free", label: "Tax Free" },
+      { value: "monthly-income", label: "Monthly Income" }
+    ],
+    default: "new"
   },
   gradient: {
     type: "select",
@@ -815,14 +898,60 @@ function updateDebug(rgb, result) {
   extraction.setValues({ color: colorVal, hsl: hslVal, token: fam.token });
 }
 
+var TAG_CONFIG = {
+  "none":            { icon: "",       label: "" },
+  "new":             { icon: "", label: "New" },
+  "high-yield":      { icon: "", label: "High Yield" },
+  "senior-secured":  { icon: "", label: "Senior Secured" },
+  "tax-free":        { icon: "", label: "Tax Free" },
+  "monthly-income":  { icon: "", label: "Monthly Income" }
+};
+
+function applyTag(variant) {
+  var tag = document.getElementById("mdsTag");
+  var icon = document.getElementById("mdsTagIcon");
+  var label = document.getElementById("mdsTagLabel");
+  var cfg = TAG_CONFIG[variant] || TAG_CONFIG["none"];
+  tag.setAttribute("data-variant", variant);
+  icon.textContent = cfg.icon;
+  label.textContent = cfg.label;
+}
+
 dial.subscribe(function(values) {
   applyTheme(values.theme);
   selectLogo(values.issuer);
-  document.getElementById("customTag").textContent = values.tag || "";
+  applyTag(values.tag);
   document.getElementById("gradientOverlay").style.display = values.gradient === "off" ? "none" : "";
   document.documentElement.style.setProperty("--gradientHeight", values.gradientHeight + "vh");
 });
 
+// ── Logo previews in DialKit dropdown ──
+function injectLogoPreviewsInDropdown() {
+  var observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(m) {
+      m.addedNodes.forEach(function(node) {
+        if (!(node instanceof HTMLElement)) return;
+        var opts = node.querySelectorAll ? node.querySelectorAll(".dialkit-select-option") : [];
+        if (node.classList && node.classList.contains("dialkit-select-option")) opts = [node];
+        opts.forEach(function(opt) {
+          if (opt.querySelector(".dk-logo-preview")) return;
+          var text = opt.textContent.trim();
+          if (LOGOS.indexOf(text) === -1) return;
+          var img = document.createElement("img");
+          img.className = "dk-logo-preview";
+          img.src = "logos/" + text + ".png";
+          img.alt = "";
+          img.loading = "lazy";
+          opt.insertBefore(img, opt.firstChild);
+        });
+      });
+    });
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
+}
+injectLogoPreviewsInDropdown();
+
 // Initial
 selectLogo("Aye Finance");
+applyTag("new");
 </script>
