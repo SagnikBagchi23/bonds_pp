@@ -1,0 +1,954 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bond Gradient Tester</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Inter:wght@400;500;600&display=swap">
+
+<style>
+/* ── Layout: mobile-first single column, 390px reference width ── */
+
+/* ── Color tokens ── */
+:root {
+  /* Mint DS – light mode */
+  --backgroundPrimary:        #FFFFFF;
+  --backgroundSurfaceZ1:      #FFFFFF;
+  --backgroundSurfaceZ2:      #F7F7F7;
+  --backgroundSecondary:      #F7F7F7;
+  --backgroundTertiary:       #EFF0F1;
+  --backgroundAccent:         #04B488;
+  --backgroundNegative:       #ED5533;
+  --backgroundPositive:       #04B488;
+  --backgroundWarning:        #E7A71E;
+  --backgroundAccentSubtle:   #E9FAF3;
+  --backgroundNegativeSubtle: #FFF1ED;
+  --backgroundPositiveSubtle: #E9FAF3;
+  --backgroundWarningSubtle:  #FFF7DE;
+  --backgroundDisabled:       #F7F7F7;
+  --borderPrimary:            #E7E8E9;
+  --borderAccent:             #04B488;
+  --borderNegative:           #ED5533;
+  --borderDisabled:           #EFF0F1;
+  --borderNeutral:            #353839;
+  --contentPrimary:           #353839;
+  --contentSecondary:         #7F8283;
+  --contentTertiary:          #898C8E;
+  --contentDisabled:          #BABBBC;
+  --contentAccent:            #04B488;
+  --contentPositive:          #04B488;
+  --contentNegative:          #ED5533;
+  --contentWarning:           #E7A71E;
+  --contentOnColour:          #FFFFFF;
+
+  /* Data Viz Subtle Backgrounds – light */
+  --bgDVLilacSubtle:      #F5F5FD;
+  --bgDVBlueSubtle:       #F2F8FF;
+  --bgDVSkyBlueSubtle:    #ECF7FF;
+  --bgDVMintGreenSubtle:  #E9FAF3;
+  --bgDVOliveGreenSubtle: #F3F8E7;
+  --bgDVYellowSubtle:     #FFF8D4;
+  --bgDVOrangeSubtle:     #FFF2DE;
+  --bgDVRedSubtle:        #FFEEE9;
+  --bgDVMagentaSubtle:    #FEF1F4;
+  --bgDVBrownSubtle:      #FCF2F1;
+  --bgDVGreySubtle:       #F2F5F9;
+
+  /* Active gradient (set by JS) */
+  --gradientStart: var(--bgDVGreySubtle);
+  --gradientHeight: 20vh;
+
+  /* Panel */
+  --panelBg: rgba(255,255,255,0.92);
+  --panelBorder: rgba(0,0,0,0.08);
+  --panelText: #353839;
+  --panelTextSecondary: #7F8283;
+
+  /* Type scale */
+  --font-body: 'DM Sans', 'GrowwSans', system-ui, sans-serif;
+  --font-heading: 'Inter', 'Sohne', system-ui, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --backgroundPrimary:        #060809;
+    --backgroundSurfaceZ1:      #151819;
+    --backgroundSurfaceZ2:      #1E2224;
+    --backgroundSecondary:      #151819;
+    --backgroundTertiary:       #1E2224;
+    --backgroundAccent:         #04B488;
+    --backgroundNegative:       #ED5533;
+    --backgroundPositive:       #04B488;
+    --backgroundWarning:        #E7A71E;
+    --backgroundAccentSubtle:   #0E261D;
+    --backgroundNegativeSubtle: #2D1711;
+    --backgroundPositiveSubtle: #0E261D;
+    --backgroundWarningSubtle:  #241E0B;
+    --backgroundDisabled:       #151819;
+    --borderPrimary:            #252A2C;
+    --borderAccent:             #04B488;
+    --borderNegative:           #ED5533;
+    --borderDisabled:           #1E2224;
+    --borderNeutral:            #F2F5F7;
+    --contentPrimary:           #F2F5F7;
+    --contentSecondary:         #989EA0;
+    --contentTertiary:          #696E70;
+    --contentDisabled:          #44494B;
+    --contentAccent:            #04B488;
+    --contentPositive:          #04B488;
+    --contentNegative:          #ED5533;
+    --contentWarning:           #E7A71E;
+    --contentOnColour:          #FFFFFF;
+
+    --bgDVLilacSubtle:      #202137;
+    --bgDVBlueSubtle:       #161C41;
+    --bgDVSkyBlueSubtle:    #102230;
+    --bgDVMintGreenSubtle:  #0E261D;
+    --bgDVOliveGreenSubtle: #1E2117;
+    --bgDVYellowSubtle:     #241E0B;
+    --bgDVOrangeSubtle:     #291A0C;
+    --bgDVRedSubtle:        #2D1711;
+    --bgDVMagentaSubtle:    #31111D;
+    --bgDVBrownSubtle:      #271A18;
+    --bgDVGreySubtle:       #1C1F24;
+
+    --panelBg: rgba(21,24,25,0.94);
+    --panelBorder: rgba(255,255,255,0.08);
+    --panelText: #F2F5F7;
+    --panelTextSecondary: #989EA0;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --backgroundPrimary:        #060809;
+  --backgroundSurfaceZ1:      #151819;
+  --backgroundSurfaceZ2:      #1E2224;
+  --backgroundSecondary:      #151819;
+  --backgroundTertiary:       #1E2224;
+  --backgroundAccent:         #04B488;
+  --backgroundNegative:       #ED5533;
+  --backgroundPositive:       #04B488;
+  --backgroundWarning:        #E7A71E;
+  --backgroundAccentSubtle:   #0E261D;
+  --backgroundNegativeSubtle: #2D1711;
+  --backgroundPositiveSubtle: #0E261D;
+  --backgroundWarningSubtle:  #241E0B;
+  --backgroundDisabled:       #151819;
+  --borderPrimary:            #252A2C;
+  --borderAccent:             #04B488;
+  --borderNegative:           #ED5533;
+  --borderDisabled:           #1E2224;
+  --borderNeutral:            #F2F5F7;
+  --contentPrimary:           #F2F5F7;
+  --contentSecondary:         #989EA0;
+  --contentTertiary:          #696E70;
+  --contentDisabled:          #44494B;
+  --contentAccent:            #04B488;
+  --contentPositive:          #04B488;
+  --contentNegative:          #ED5533;
+  --contentWarning:           #E7A71E;
+  --contentOnColour:          #FFFFFF;
+
+  --bgDVLilacSubtle:      #202137;
+  --bgDVBlueSubtle:       #161C41;
+  --bgDVSkyBlueSubtle:    #102230;
+  --bgDVMintGreenSubtle:  #0E261D;
+  --bgDVOliveGreenSubtle: #1E2117;
+  --bgDVYellowSubtle:     #241E0B;
+  --bgDVOrangeSubtle:     #291A0C;
+  --bgDVRedSubtle:        #2D1711;
+  --bgDVMagentaSubtle:    #31111D;
+  --bgDVBrownSubtle:      #271A18;
+  --bgDVGreySubtle:       #1C1F24;
+
+  --panelBg: rgba(21,24,25,0.94);
+  --panelBorder: rgba(255,255,255,0.08);
+  --panelText: #F2F5F7;
+  --panelTextSecondary: #989EA0;
+}
+
+/* ── Base ── */
+* { box-sizing: border-box; margin: 0; }
+body {
+  background: var(--backgroundPrimary);
+  color: var(--contentPrimary);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ── Gradient overlay ── */
+.gradient-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: var(--gradientHeight);
+  background: linear-gradient(to bottom, var(--gradientStart), var(--backgroundPrimary));
+  pointer-events: none;
+  z-index: 0;
+  transition: background 0.4s ease;
+}
+
+/* ── Page wrapper ── */
+.page-wrap {
+  position: relative;
+  z-index: 1;
+  max-width: 430px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding-block: 0;
+}
+
+/* ── App bar ── */
+.app-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 10;
+}
+.app-bar-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: var(--contentPrimary);
+  cursor: pointer;
+}
+.app-bar-icon svg { width: 20px; height: 20px; }
+
+/* ── Hero section ── */
+.hero {
+  padding: 8px 16px 20px;
+}
+.issuer-logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  object-fit: cover;
+  background: var(--backgroundSurfaceZ1);
+  border: 1px solid var(--borderPrimary);
+}
+.issuer-meta {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.issuer-tag {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--contentTertiary);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.issuer-dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--contentTertiary);
+}
+.bond-name {
+  font-family: var(--font-heading);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--contentPrimary);
+  margin-top: 4px;
+  text-wrap: balance;
+}
+.yield-row {
+  margin-top: 16px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.yield-value {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--contentPrimary);
+  font-variant-numeric: tabular-nums;
+}
+.yield-label {
+  font-size: 13px;
+  color: var(--contentSecondary);
+}
+.yield-badge {
+  margin-top: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--contentPositive);
+  font-variant-numeric: tabular-nums;
+}
+.yield-badge-period {
+  color: var(--contentSecondary);
+  font-weight: 400;
+  margin-left: 4px;
+}
+
+/* ── Details card ── */
+.details-card {
+  margin: 16px;
+  background: var(--backgroundSurfaceZ1);
+  border: 1px solid var(--borderPrimary);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+}
+.detail-row + .detail-row {
+  border-top: 1px solid var(--borderPrimary);
+}
+.detail-label {
+  font-size: 13px;
+  color: var(--contentSecondary);
+}
+.detail-value {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--contentPrimary);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+.rating-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: var(--backgroundAccentSubtle);
+  color: var(--contentAccent);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* ── CTA ── */
+.cta-area {
+  padding: 16px;
+  position: sticky;
+  bottom: env(safe-area-inset-bottom, 0px);
+  z-index: 10;
+}
+.cta-btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background: var(--backgroundAccent);
+  color: var(--contentOnColour);
+  font-family: var(--font-heading);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.01em;
+}
+
+/* ── Control Panel ── */
+.control-panel {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  width: 320px;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100vh - 32px);
+  background: var(--panelBg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--panelBorder);
+  border-radius: 16px;
+  z-index: 100;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+  color: var(--panelText);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+}
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--panelBorder);
+  cursor: grab;
+  user-select: none;
+}
+.panel-title {
+  font-family: var(--font-heading);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.panel-toggle {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  color: var(--panelTextSecondary);
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 16px;
+}
+.panel-toggle:hover { background: var(--panelBorder); }
+.panel-body {
+  padding: 12px 16px 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.panel-body[hidden] { display: none; }
+.control-group label {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--panelTextSecondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+}
+.control-group select,
+.control-group input[type="range"] {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: 13px;
+}
+.control-group select {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--panelBorder);
+  background: var(--backgroundSurfaceZ1);
+  color: var(--panelText);
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M3 4.5L6 7.5L9 4.5' stroke='%23898C8E' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 28px;
+}
+.control-group input[type="range"] {
+  accent-color: var(--backgroundAccent);
+  height: 4px;
+}
+.theme-toggle-row {
+  display: flex;
+  gap: 4px;
+  background: var(--backgroundTertiary);
+  border-radius: 8px;
+  padding: 3px;
+}
+.theme-btn {
+  flex: 1;
+  padding: 6px 0;
+  border: none;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--panelTextSecondary);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.theme-btn.active {
+  background: var(--backgroundSurfaceZ1);
+  color: var(--panelText);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+/* ── Debug info ── */
+.debug-box {
+  background: var(--backgroundSecondary);
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-variant-numeric: tabular-nums;
+}
+.debug-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+}
+.debug-label { color: var(--panelTextSecondary); }
+.debug-value {
+  color: var(--panelText);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.color-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  border: 1px solid var(--panelBorder);
+  flex-shrink: 0;
+}
+.family-chip {
+  display: inline-flex;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.fallback-tag {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--contentWarning);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ── Logo grid in panel ── */
+.logo-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 4px;
+}
+.logo-thumb {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 2px solid transparent;
+  cursor: pointer;
+  background: var(--backgroundSurfaceZ1);
+  transition: border-color 0.15s;
+}
+.logo-thumb:hover { border-color: var(--contentTertiary); }
+.logo-thumb.active { border-color: var(--backgroundAccent); }
+
+/* ── Responsive ── */
+@media (max-width: 420px) {
+  .control-panel {
+    bottom: 8px; right: 8px; left: 8px;
+    width: auto;
+    max-height: 50vh;
+  }
+}
+</style>
+
+<!-- Gradient overlay -->
+<div class="gradient-overlay" id="gradientOverlay"></div>
+
+<!-- Mock product page -->
+<div class="page-wrap">
+  <!-- App bar -->
+  <div class="app-bar">
+    <div class="app-bar-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </div>
+    <div class="app-bar-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <img class="issuer-logo" id="heroLogo" src="logos/Aye Finance.png" alt="Issuer logo">
+    <div class="issuer-meta">
+      <span class="issuer-tag" id="issuerName">Aye Finance</span>
+      <span class="issuer-dot"></span>
+      <span class="issuer-tag">NCD</span>
+    </div>
+    <div class="bond-name">Aye Finance Pvt Ltd NCD Tranche I</div>
+    <div class="yield-row">
+      <span class="yield-value">9.25%</span>
+      <span class="yield-label">p.a. yield</span>
+    </div>
+    <div class="yield-badge">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M3 5l3-3 3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      +0.15% today
+      <span class="yield-badge-period">1D</span>
+    </div>
+  </div>
+
+  <!-- Details card -->
+  <div class="details-card">
+    <div class="detail-row">
+      <span class="detail-label">Face Value</span>
+      <span class="detail-value">&#8377;1,000.00</span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-label">Min. Investment</span>
+      <span class="detail-value">&#8377;10,000.00</span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-label">Coupon Rate</span>
+      <span class="detail-value">9.25%</span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-label">Maturity Date</span>
+      <span class="detail-value">15 Mar 2029</span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-label">Credit Rating</span>
+      <span class="detail-value"><span class="rating-chip">AA+</span></span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-label">Payment Frequency</span>
+      <span class="detail-value">Monthly</span>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-area">
+    <button class="cta-btn">Invest Now</button>
+  </div>
+
+  <!-- Spacer for panel -->
+  <div style="height:200px"></div>
+</div>
+
+<!-- Control Panel -->
+<div class="control-panel" id="controlPanel">
+  <div class="panel-header">
+    <span class="panel-title">Gradient Tester</span>
+    <button class="panel-toggle" id="panelToggle" aria-label="Toggle panel">&#9660;</button>
+  </div>
+  <div class="panel-body" id="panelBody">
+    <!-- Theme toggle -->
+    <div class="control-group">
+      <label>Theme</label>
+      <div class="theme-toggle-row">
+        <button class="theme-btn" data-theme="light">Light</button>
+        <button class="theme-btn active" data-theme="system">System</button>
+        <button class="theme-btn" data-theme="dark">Dark</button>
+      </div>
+    </div>
+
+    <!-- Logo selector -->
+    <div class="control-group">
+      <label>Issuer Logo</label>
+      <select id="logoSelect"></select>
+    </div>
+
+    <!-- Logo grid -->
+    <div class="control-group">
+      <label>Quick Pick</label>
+      <div class="logo-grid" id="logoGrid"></div>
+    </div>
+
+    <!-- Gradient height -->
+    <div class="control-group">
+      <label>Gradient Height: <span id="heightLabel">20vh</span></label>
+      <input type="range" id="heightSlider" min="5" max="40" value="20" step="1">
+    </div>
+
+    <!-- Debug info -->
+    <div class="control-group">
+      <label>Extraction Result</label>
+      <div class="debug-box">
+        <div class="debug-row">
+          <span class="debug-label">Dominant Color</span>
+          <span class="debug-value" id="dbgColor">
+            <span class="color-swatch" id="dbgSwatch"></span>
+            <span id="dbgHex">—</span>
+          </span>
+        </div>
+        <div class="debug-row">
+          <span class="debug-label">Hue / Sat / Light</span>
+          <span class="debug-value" id="dbgHSL">—</span>
+        </div>
+        <div class="debug-row">
+          <span class="debug-label">Matched Family</span>
+          <span class="debug-value"><span class="family-chip" id="dbgFamily">—</span></span>
+        </div>
+        <div class="debug-row">
+          <span class="debug-label">Token</span>
+          <span class="debug-value" id="dbgToken">—</span>
+        </div>
+        <div class="debug-row">
+          <span class="debug-label">Status</span>
+          <span class="debug-value" id="dbgStatus">—</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Logo list ──
+const LOGOS = [
+  "Adani Enterprises","Akara Capital","Asirvad","Auxilo Finserve","Aye Finance",
+  "Capri Global","Dishman","EFL","Early Salary","Finkurve",
+  "Finnable Credit","Finnable Credit_rfq","ICL fincorp","IFL Finance Limited",
+  "IIFL Samasta-1","IIFL Samasta","IKF Finance","Incred-1","Incred","Incredoct",
+  "Keertana Finserv","Kosamattam Finance Ltd","Krazybee Financial logo","MANBA",
+  "Microfin Midland logo","Microfin Midland","Mufin","Muthoot Capital",
+  "Muthoot microfin","Muthoottu Mini financiers","Namra_rfq","Navi Finserv",
+  "Oxyzo Financial Services","Profectus","RDC","SFL","SK","Sarathi",
+  "Spandana Sphoorty","UGRO RFQ","Ugro Capital","Varthana Finance","navi logo","progfin"
+];
+
+// ── Data Viz families with hue anchors ──
+const FAMILIES = [
+  { name: "Brown",      hue: 5,   css: "BrownSubtle",      token: "--bgDVBrownSubtle" },
+  { name: "Red",        hue: 11,  css: "RedSubtle",         token: "--bgDVRedSubtle" },
+  { name: "Orange",     hue: 34,  css: "OrangeSubtle",      token: "--bgDVOrangeSubtle" },
+  { name: "Yellow",     hue: 49,  css: "YellowSubtle",      token: "--bgDVYellowSubtle" },
+  { name: "OliveGreen", hue: 78,  css: "OliveGreenSubtle",  token: "--bgDVOliveGreenSubtle" },
+  { name: "MintGreen",  hue: 162, css: "MintGreenSubtle",   token: "--bgDVMintGreenSubtle" },
+  { name: "SkyBlue",    hue: 205, css: "SkyBlueSubtle",     token: "--bgDVSkyBlueSubtle" },
+  { name: "Blue",       hue: 233, css: "BlueSubtle",        token: "--bgDVBlueSubtle" },
+  { name: "Lilac",      hue: 240, css: "LilacSubtle",       token: "--bgDVLilacSubtle" },
+  { name: "Magenta",    hue: 333, css: "MagentaSubtle",     token: "--bgDVMagentaSubtle" },
+];
+const GREY_FAMILY = { name: "Grey", css: "GreySubtle", token: "--bgDVGreySubtle" };
+
+// Family base colors for chip backgrounds
+const FAMILY_COLORS = {
+  Brown:"#9D615C", Red:"#FF5E3B", Orange:"#F59817", Yellow:"#FCCE00",
+  OliveGreen:"#A1B55C", MintGreen:"#04B488", SkyBlue:"#4DA4DD",
+  Blue:"#5669FF", Lilac:"#7A7AC6", Magenta:"#C73A75", Grey:"#808FA3"
+};
+
+// ── Color extraction ──
+function extractDominantColor(imgSrc) {
+  return new Promise(function(resolve) {
+    var img = new Image();
+    img.crossOrigin = "anonymous";
+    img.onload = function() {
+      var canvas = document.createElement("canvas");
+      var SIZE = 50;
+      canvas.width = SIZE;
+      canvas.height = SIZE;
+      var ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0, SIZE, SIZE);
+      var data;
+      try {
+        data = ctx.getImageData(0, 0, SIZE, SIZE).data;
+      } catch(e) {
+        resolve(null);
+        return;
+      }
+      var buckets = {};
+      var totalPixels = 0;
+      var filteredPixels = 0;
+      for (var i = 0; i < data.length; i += 4) {
+        var r = data[i], g = data[i+1], b = data[i+2], a = data[i+3];
+        totalPixels++;
+        if (a < 128) continue;
+        if (r > 240 && g > 240 && b > 240) continue;
+        if (r < 15 && g < 15 && b < 15) continue;
+        filteredPixels++;
+        var key = (r >> 5) + "," + (g >> 5) + "," + (b >> 5);
+        if (!buckets[key]) buckets[key] = { count: 0, rS: 0, gS: 0, bS: 0 };
+        buckets[key].count++;
+        buckets[key].rS += r;
+        buckets[key].gS += g;
+        buckets[key].bS += b;
+      }
+      var ratio = filteredPixels / totalPixels;
+      if (ratio < 0.05) {
+        resolve({ r: 0, g: 0, b: 0, ratio: ratio, tooFew: true });
+        return;
+      }
+      var best = null;
+      var keys = Object.keys(buckets);
+      for (var k = 0; k < keys.length; k++) {
+        var bk = buckets[keys[k]];
+        if (!best || bk.count > best.count) best = bk;
+      }
+      if (!best) { resolve(null); return; }
+      resolve({
+        r: Math.round(best.rS / best.count),
+        g: Math.round(best.gS / best.count),
+        b: Math.round(best.bS / best.count),
+        ratio: ratio,
+        tooFew: false
+      });
+    };
+    img.onerror = function() { resolve(null); };
+    img.src = imgSrc;
+  });
+}
+
+// ── RGB to HSL ──
+function rgbToHsl(r, g, b) {
+  r /= 255; g /= 255; b /= 255;
+  var max = Math.max(r, g, b), min = Math.min(r, g, b);
+  var l = (max + min) / 2;
+  if (max === min) return { h: 0, s: 0, l: l };
+  var d = max - min;
+  var s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+  var h;
+  if (max === r) h = ((g - b) / d + (g < b ? 6 : 0)) / 6;
+  else if (max === g) h = ((b - r) / d + 2) / 6;
+  else h = ((r - g) / d + 4) / 6;
+  return { h: h * 360, s: s, l: l };
+}
+
+function rgbToHex(r, g, b) {
+  return "#" + [r,g,b].map(function(c) { return c.toString(16).padStart(2,"0"); }).join("");
+}
+
+// ── Map to family ──
+function mapToFamily(rgb) {
+  if (!rgb || rgb.tooFew) return { family: GREY_FAMILY, fallback: true, reason: "too few chromatic pixels" };
+
+  var hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+
+  if (hsl.s < 0.12) return { family: GREY_FAMILY, fallback: true, reason: "low saturation (" + Math.round(hsl.s * 100) + "%)", hsl: hsl };
+  if (hsl.l < 0.08) return { family: GREY_FAMILY, fallback: true, reason: "near-black (L=" + Math.round(hsl.l * 100) + "%)", hsl: hsl };
+  if (hsl.l > 0.92) return { family: GREY_FAMILY, fallback: true, reason: "near-white (L=" + Math.round(hsl.l * 100) + "%)", hsl: hsl };
+  if (hsl.l > 0.82 && hsl.s < 0.35) return { family: GREY_FAMILY, fallback: true, reason: "washed-out (L=" + Math.round(hsl.l * 100) + "%, S=" + Math.round(hsl.s * 100) + "%)", hsl: hsl };
+
+  var closest = null;
+  var minDist = Infinity;
+  for (var i = 0; i < FAMILIES.length; i++) {
+    var dist = Math.min(
+      Math.abs(hsl.h - FAMILIES[i].hue),
+      360 - Math.abs(hsl.h - FAMILIES[i].hue)
+    );
+    if (dist < minDist) { minDist = dist; closest = FAMILIES[i]; }
+  }
+  return { family: closest, fallback: false, reason: "hue match (dist " + Math.round(minDist) + "°)", hsl: hsl };
+}
+
+// ── Apply gradient ──
+function applyGradient(family) {
+  document.documentElement.style.setProperty("--gradientStart", "var(" + family.token + ")");
+}
+
+// ── UI wiring ──
+var logoSelect = document.getElementById("logoSelect");
+var logoGrid = document.getElementById("logoGrid");
+var heroLogo = document.getElementById("heroLogo");
+var issuerName = document.getElementById("issuerName");
+var heightSlider = document.getElementById("heightSlider");
+var heightLabel = document.getElementById("heightLabel");
+var panelToggle = document.getElementById("panelToggle");
+var panelBody = document.getElementById("panelBody");
+
+// Populate select
+LOGOS.forEach(function(name) {
+  var opt = document.createElement("option");
+  opt.value = name;
+  opt.textContent = name;
+  if (name === "Aye Finance") opt.selected = true;
+  logoSelect.appendChild(opt);
+});
+
+// Populate grid
+LOGOS.forEach(function(name) {
+  var img = document.createElement("img");
+  img.className = "logo-thumb";
+  img.src = "logos/" + name + ".png";
+  img.alt = name;
+  img.title = name;
+  img.dataset.name = name;
+  if (name === "Aye Finance") img.classList.add("active");
+  img.addEventListener("click", function() { selectLogo(name); });
+  logoGrid.appendChild(img);
+});
+
+// Theme toggle
+document.querySelectorAll(".theme-btn").forEach(function(btn) {
+  btn.addEventListener("click", function() {
+    document.querySelectorAll(".theme-btn").forEach(function(b) { b.classList.remove("active"); });
+    btn.classList.add("active");
+    var theme = btn.dataset.theme;
+    if (theme === "dark") {
+      document.documentElement.setAttribute("data-theme", "dark");
+    } else if (theme === "light") {
+      document.documentElement.setAttribute("data-theme", "light");
+    } else {
+      document.documentElement.removeAttribute("data-theme");
+    }
+  });
+});
+
+// Height slider
+heightSlider.addEventListener("input", function() {
+  var val = heightSlider.value;
+  heightLabel.textContent = val + "vh";
+  document.documentElement.style.setProperty("--gradientHeight", val + "vh");
+});
+
+// Panel toggle
+var panelOpen = true;
+panelToggle.addEventListener("click", function() {
+  panelOpen = !panelOpen;
+  panelBody.hidden = !panelOpen;
+  panelToggle.textContent = panelOpen ? "▼" : "▲";
+});
+
+// Select logo
+function selectLogo(name) {
+  logoSelect.value = name;
+  heroLogo.src = "logos/" + name + ".png";
+  issuerName.textContent = name;
+  document.querySelector(".bond-name").textContent = name + " NCD Tranche I";
+
+  // Update grid active state
+  document.querySelectorAll(".logo-thumb").forEach(function(t) {
+    t.classList.toggle("active", t.dataset.name === name);
+  });
+
+  // Extract & map
+  extractDominantColor("logos/" + name + ".png").then(function(rgb) {
+    var result = mapToFamily(rgb);
+    applyGradient(result.family);
+    updateDebug(rgb, result);
+  });
+}
+
+logoSelect.addEventListener("change", function() { selectLogo(logoSelect.value); });
+
+// Debug update
+function updateDebug(rgb, result) {
+  var dbgHex = document.getElementById("dbgHex");
+  var dbgSwatch = document.getElementById("dbgSwatch");
+  var dbgHSL = document.getElementById("dbgHSL");
+  var dbgFamily = document.getElementById("dbgFamily");
+  var dbgToken = document.getElementById("dbgToken");
+  var dbgStatus = document.getElementById("dbgStatus");
+
+  if (!rgb || rgb.tooFew) {
+    dbgHex.textContent = rgb ? "filtered out" : "failed";
+    dbgSwatch.style.background = "#808FA3";
+    dbgHSL.textContent = "—";
+  } else {
+    var hex = rgbToHex(rgb.r, rgb.g, rgb.b);
+    dbgHex.textContent = hex;
+    dbgSwatch.style.background = hex;
+    if (result.hsl) {
+      dbgHSL.textContent = Math.round(result.hsl.h) + "° / " + Math.round(result.hsl.s * 100) + "% / " + Math.round(result.hsl.l * 100) + "%";
+    }
+  }
+
+  var fam = result.family;
+  dbgFamily.textContent = fam.name;
+  dbgFamily.style.background = FAMILY_COLORS[fam.name] + "22";
+  dbgFamily.style.color = FAMILY_COLORS[fam.name];
+  dbgToken.textContent = fam.token;
+
+  if (result.fallback) {
+    dbgStatus.innerHTML = '<span class="fallback-tag">Fallback</span> ' + result.reason;
+  } else {
+    dbgStatus.textContent = result.reason;
+  }
+}
+
+// Initial load
+selectLogo("Aye Finance");
+</script>
