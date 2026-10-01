@@ -520,56 +520,6 @@ body {
   min-height: 100vh;
 }
 
-/* ── Debug panel (left of phone) ── */
-.debug-overlay {
-  width: 260px;
-  flex-shrink: 0;
-  background: rgba(0,0,0,0.75);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-radius: 14px;
-  padding: 14px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  font-family: var(--font-heading);
-  font-size: 13px;
-  font-weight: 500;
-  color: rgba(255,255,255,0.85);
-  font-variant-numeric: tabular-nums;
-}
-.debug-overlay .dbg-row {
-  display: flex;
-  justify-content: space-between;
-}
-.debug-overlay .dbg-label { opacity: 0.5; }
-.debug-overlay .dbg-val { display: flex; align-items: center; gap: 4px; }
-.debug-overlay .dbg-swatch {
-  width: 10px; height: 10px; border-radius: 3px;
-  border: 1px solid rgba(255,255,255,0.2);
-}
-.debug-overlay .dbg-chip {
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-size: 12px;
-}
-.debug-overlay .dbg-fallback {
-  color: #FCCE00;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-/* On small screens, put debug below */
-@media (max-width: 750px) {
-  .mockup-layout {
-    flex-direction: column-reverse;
-  }
-  .debug-overlay {
-    width: 100%;
-    max-width: 405px;
-  }
-}
 
 /* ── Responsive ── */
 @media (max-width: 500px) {
@@ -590,32 +540,7 @@ body {
 }
 </style>
 
-<!-- Mockup + Debug layout -->
 <div class="mockup-layout">
-
-<!-- Debug panel (left) -->
-<div class="debug-overlay" id="debugOverlay">
-  <div class="dbg-row">
-    <span class="dbg-label">Color</span>
-    <span class="dbg-val"><span class="dbg-swatch" id="dbgSwatch"></span><span id="dbgHex">&mdash;</span></span>
-  </div>
-  <div class="dbg-row">
-    <span class="dbg-label">HSL</span>
-    <span class="dbg-val" id="dbgHSL">&mdash;</span>
-  </div>
-  <div class="dbg-row">
-    <span class="dbg-label">Family</span>
-    <span class="dbg-val"><span class="dbg-chip" id="dbgFamily">&mdash;</span></span>
-  </div>
-  <div class="dbg-row">
-    <span class="dbg-label">Token</span>
-    <span class="dbg-val" id="dbgToken">&mdash;</span>
-  </div>
-  <div class="dbg-row">
-    <span class="dbg-label">Status</span>
-    <span class="dbg-val" id="dbgStatus">&mdash;</span>
-  </div>
-</div>
 
 <!-- iPhone 15 Pro Mockup -->
 <div class="iphone-chassis">
@@ -845,6 +770,12 @@ var dial = DialKit.createDialKit("Gradient Tester", {
   gradientHeight: [20, 5, 40, 1]
 });
 
+var extraction = DialKit.createDialKit("Extraction", {
+  color: { type: "text", default: "—", placeholder: "" },
+  hsl: { type: "text", default: "—", placeholder: "" },
+  token: { type: "text", default: "—", placeholder: "" }
+}, { defaultCollapsed: false });
+
 function selectLogo(name) {
   document.getElementById("heroLogo").src = "logos/" + name + ".png";
   document.getElementById("issuerName").textContent = name;
@@ -868,37 +799,20 @@ function applyTheme(theme) {
 }
 
 function updateDebug(rgb, result) {
-  var dbgHex = document.getElementById("dbgHex");
-  var dbgSwatch = document.getElementById("dbgSwatch");
-  var dbgHSL = document.getElementById("dbgHSL");
-  var dbgFamily = document.getElementById("dbgFamily");
-  var dbgToken = document.getElementById("dbgToken");
-  var dbgStatus = document.getElementById("dbgStatus");
+  var colorVal = "—";
+  var hslVal = "—";
 
   if (!rgb || rgb.tooFew) {
-    dbgHex.textContent = rgb ? "filtered out" : "failed";
-    dbgSwatch.style.background = "#808FA3";
-    dbgHSL.textContent = "—";
+    colorVal = rgb ? "filtered out" : "failed";
   } else {
-    var hex = rgbToHex(rgb.r, rgb.g, rgb.b);
-    dbgHex.textContent = hex;
-    dbgSwatch.style.background = hex;
+    colorVal = rgbToHex(rgb.r, rgb.g, rgb.b);
     if (result.hsl) {
-      dbgHSL.textContent = Math.round(result.hsl.h) + "° / " + Math.round(result.hsl.s * 100) + "% / " + Math.round(result.hsl.l * 100) + "%";
+      hslVal = Math.round(result.hsl.h) + "° / " + Math.round(result.hsl.s * 100) + "% / " + Math.round(result.hsl.l * 100) + "%";
     }
   }
 
   var fam = result.family;
-  dbgFamily.textContent = fam.name;
-  dbgFamily.style.background = FAMILY_COLORS[fam.name] + "33";
-  dbgFamily.style.color = FAMILY_COLORS[fam.name];
-  dbgToken.textContent = fam.token;
-
-  if (result.fallback) {
-    dbgStatus.innerHTML = '<span class="dbg-fallback">Fallback</span> ' + result.reason;
-  } else {
-    dbgStatus.textContent = result.reason;
-  }
+  extraction.setValues({ color: colorVal, hsl: hslVal, token: fam.token });
 }
 
 dial.subscribe(function(values) {
