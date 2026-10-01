@@ -189,27 +189,43 @@ body {
   min-height: 100vh;
 }
 
-/* ── iPhone Mockup Frame ── */
-.iphone-frame {
-  width: 393px;
-  height: 852px;
-  border: 2px solid var(--borderPrimary);
-  border-radius: 48px;
-  overflow: hidden;
+/* ── iPhone 15 Pro Mockup ── */
+.iphone-chassis {
   position: relative;
   flex-shrink: 0;
-  background: var(--backgroundPrimary);
+  width: 405px;
+  height: 868px;
 }
-.iphone-notch {
+
+.iphone-frame {
+  width: 100%;
+  height: 100%;
+  border-radius: 54px;
+  background: var(--iphoneBody);
+  position: relative;
+  box-shadow:
+    inset 0 0 0 1.5px var(--iphoneEdgeLight),
+    0 0 0 2px var(--iphoneEdgeDark),
+    0 20px 60px rgba(0,0,0,0.35),
+    0 8px 20px rgba(0,0,0,0.2);
+  overflow: hidden;
+}
+
+:root {
+  --iphoneBody: #1A1A1E;
+  --iphoneEdgeLight: rgba(255,255,255,0.12);
+  --iphoneEdgeDark: #0A0A0C;
+  --iphoneBezel: #0A0A0C;
+  --iphoneBtnColor: #2A2A2E;
+}
+
+.iphone-screen-bezel {
   position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 126px;
-  height: 34px;
-  background: #000;
-  border-radius: 0 0 20px 20px;
-  z-index: 20;
+  top: 6px; left: 6px; right: 6px; bottom: 6px;
+  border-radius: 48px;
+  background: var(--backgroundPrimary);
+  overflow: hidden;
+  z-index: 1;
 }
 .iphone-screen {
   width: 100%;
@@ -217,6 +233,84 @@ body {
   overflow-y: auto;
   overflow-x: hidden;
   position: relative;
+}
+
+/* Dynamic Island */
+.dynamic-island {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 36px;
+  background: #000;
+  border-radius: 20px;
+  z-index: 20;
+}
+.dynamic-island::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 40%, #1a2a3a, #0a0f15);
+  box-shadow: inset 0 0 2px rgba(255,255,255,0.08);
+}
+
+/* Side buttons */
+.iphone-btn {
+  position: absolute;
+  background: var(--iphoneBtnColor);
+  border-radius: 2px;
+  z-index: 5;
+}
+.iphone-btn-silent {
+  left: -3px;
+  top: 160px;
+  width: 3px;
+  height: 28px;
+  border-radius: 2px 0 0 2px;
+}
+.iphone-btn-volup {
+  left: -3px;
+  top: 210px;
+  width: 3px;
+  height: 48px;
+  border-radius: 2px 0 0 2px;
+}
+.iphone-btn-voldn {
+  left: -3px;
+  top: 268px;
+  width: 3px;
+  height: 48px;
+  border-radius: 2px 0 0 2px;
+}
+.iphone-btn-power {
+  right: -3px;
+  top: 230px;
+  width: 3px;
+  height: 80px;
+  border-radius: 0 2px 2px 0;
+}
+
+/* Speaker grille */
+.iphone-speaker {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 3px;
+  z-index: 2;
+}
+.iphone-speaker-dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #333;
 }
 
 /* ── Gradient overlay ── */
@@ -463,21 +557,36 @@ body {
 
 /* ── Responsive ── */
 @media (max-width: 500px) {
-  .iphone-frame {
+  .iphone-chassis {
     width: 100%;
-    max-width: 393px;
-    height: 750px;
-    border-radius: 0;
-    border-left: none;
-    border-right: none;
+    max-width: 405px;
+    height: 780px;
   }
+  .iphone-frame {
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .iphone-screen-bezel {
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 0;
+  }
+  .iphone-btn, .iphone-speaker { display: none; }
 }
 </style>
 
-<!-- iPhone Mockup centered -->
-<div class="iphone-frame">
-  <div class="iphone-notch"></div>
-  <div class="iphone-screen">
+<!-- iPhone 15 Pro Mockup -->
+<div class="iphone-chassis">
+  <div class="iphone-btn iphone-btn-silent"></div>
+  <div class="iphone-btn iphone-btn-volup"></div>
+  <div class="iphone-btn iphone-btn-voldn"></div>
+  <div class="iphone-btn iphone-btn-power"></div>
+  <div class="iphone-frame">
+    <div class="iphone-speaker">
+      <span class="iphone-speaker-dot"></span><span class="iphone-speaker-dot"></span><span class="iphone-speaker-dot"></span><span class="iphone-speaker-dot"></span><span class="iphone-speaker-dot"></span><span class="iphone-speaker-dot"></span>
+    </div>
+    <div class="iphone-screen-bezel">
+      <div class="dynamic-island"></div>
+      <div class="iphone-screen">
     <div class="gradient-overlay" id="gradientOverlay"></div>
     <div class="page-wrap">
       <div class="app-bar">
@@ -560,6 +669,8 @@ body {
         <span class="dbg-val" id="dbgStatus">&mdash;</span>
       </div>
     </div>
+  </div>
+  </div>
   </div>
 </div>
 
