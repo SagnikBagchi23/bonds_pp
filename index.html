@@ -277,9 +277,10 @@ body {
 .iphone-screen {
   width: 100%;
   height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Dynamic Island */
@@ -441,7 +442,11 @@ body {
   position: relative;
   z-index: 1;
   padding-block: 0;
-  padding-bottom: 80px;
+  padding-bottom: 16px;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 /* ── App bar ── */
@@ -633,10 +638,7 @@ body {
 
 /* ── CTA ── */
 .cta-area {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  flex-shrink: 0;
   padding: 12px 16px 0;
   background: var(--backgroundPrimary);
   border-top: 1px solid var(--borderPrimary);
@@ -708,8 +710,8 @@ body {
         <div class="ios-status-battery"><div class="ios-battery-fill"></div></div>
       </div>
     </div>
-    <div class="gradient-overlay" id="gradientOverlay"></div>
     <div class="page-wrap">
+      <div class="gradient-overlay" id="gradientOverlay"></div>
       <div class="app-bar">
         <div class="app-bar-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
